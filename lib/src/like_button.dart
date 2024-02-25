@@ -61,7 +61,10 @@ class LikeButton extends StatefulWidget {
 
   /// tap call back of like button
   final LikeButtonTapCallback? onTap;
-
+  
+  /// tap call back of like button
+  final LikeButtonTapCallback? onLongPress;
+  
   /// whether it is liked
   /// it's initial value
   /// you can get current value from onTap/countBuilder
@@ -289,6 +292,7 @@ class LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: onTap,
+      onLongPress: onLongPress,
       child: result,
     );
   }
@@ -420,6 +424,19 @@ class LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
     }
     if (widget.onTap != null) {
       widget.onTap!(_isLiked ?? true).then((bool? isLiked) {
+        _handleIsLikeChanged(isLiked);
+      });
+    } else {
+      _handleIsLikeChanged(!(_isLiked ?? true));
+    }
+  }
+
+  void onLongPress() {
+    if (_controller!.isAnimating || _likeCountController!.isAnimating) {
+      return;
+    }
+    if (widget.onLongPress != null) {
+      widget.onLongPress!(_isLiked ?? true).then((bool? isLiked) {
         _handleIsLikeChanged(isLiked);
       });
     } else {
