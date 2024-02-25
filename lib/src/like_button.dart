@@ -33,6 +33,7 @@ class LikeButton extends StatefulWidget {
     this.circleColor =
         const CircleColor(start: Color(0xFFFF5722), end: Color(0xFFFFC107)),
     this.onTap,
+    this.onLongPress,
     this.countPostion = CountPostion.right,
     this.padding,
     this.countDecoration,
